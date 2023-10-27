@@ -8,18 +8,16 @@
     function finalizeGovernmentUpdate(event) {
         dispatch('updateFinalGovernment', { finalGovernment: event.target.value });
     }
+
+    function handleGovernmentUpdate(event) {
+        selectedGovernment = event.detail.selectedGovernment;
+    }
   
     const governments = [
       {
         name: "Republic",
         description: [
           "Settlers cost 30 food"
-        ]
-      },
-      {
-        name: "Monarchy",
-        description: [
-          'Select a "Choose One" tile type; Receive both resources from those tiles'
         ]
       },
       {
@@ -68,22 +66,35 @@
           "Choose a city that is not your capitol; This city can now spawn units"
         ]
       },
-    ]
-  
-    function handleGovernmentUpdate(event) {
-        selectedGovernment = event.detail.selectedGovernment;
-    }
-  
+      {
+        name: "Monarchy Dst",
+        description: [
+          'Receive both resources from Desert tiles'
+        ]
+      },
+      {
+        name: "Monarchy Swp",
+        description: [
+          'Receive both resources from Desert tiles'
+        ]
+      },
+      {
+        name: "Monarchy Mtn",
+        description: [
+          'Receive both resources from Desert tiles'
+        ]
+      },
+    ]  
   </script>
   
   <main>
-        <div class='card-container'>
-            {#each governments as government}
-                <GovernmentCard government={government} selectedGovernment={selectedGovernment} on:updateSelectedGovernment={handleGovernmentUpdate}/>
-            {/each}
-        </div>
+    <div class='card-container'>
+        {#each governments as government}
+            <GovernmentCard government={government} selectedGovernment={selectedGovernment} on:updateSelectedGovernment={handleGovernmentUpdate}/>
+        {/each}
+    </div>
 
-        <button id='finalize' on:click={finalizeGovernmentUpdate} value={selectedGovernment}>Finalize Government</button>
+    <button id='finalize' on:click={finalizeGovernmentUpdate} value={selectedGovernment}>Finalize Government</button>
   </main>
 
   <style>

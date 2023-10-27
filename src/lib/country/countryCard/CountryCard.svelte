@@ -43,7 +43,7 @@
         /* width: 46%; */
         padding: 4px;
         border-radius: 10px;
-        background-color: var(--countryCardLight);
+        background-color: var(--lightYellow);
         height: 200px;
     }
     .canceled{

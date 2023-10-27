@@ -25,7 +25,7 @@
         ]
       },
       {
-        name: "Roman Empie",
+        name: "Rome",
         description: [
           "Tier 1 tiles cost 15 food",
           "+5 food from all food tiles as Republic"
@@ -38,7 +38,7 @@
         ]
       },
       {
-        name: "Cajun Folks",
+        name: "Cajuns",
         description: [
           "Tier 1 tiles cost 15 food",
           "Double food OR wood from swamps"
@@ -66,7 +66,7 @@
         ]
       }, 
       {
-        name: "Incan Empire",
+        name: "Inca",
         description: [
           "All cities can be built on mountains",
           "Gain resources from mountains even if it becomes a city tile",
@@ -74,7 +74,7 @@
         ]
       },
       {
-        name: "Mongolian Empire",
+        name: "Mongolia",
         description: [
           "Calvary have +1 move and attack",
           "Settlers have base cost of 40 food",
@@ -82,7 +82,7 @@
         ]
       },
       {
-        name: "Persian Empire",
+        name: "Persia",
         description: [
           "+5 food from desert tiles",
           "Granary gives and additional +10 food per desert"

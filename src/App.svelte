@@ -1,59 +1,56 @@
 <script>
+    import { onMount } from 'svelte';
   import CountrySelection from './lib/country/countrySelection/CountrySelection.svelte';
   import GovernmentSelection from './lib/governmentPhase/governmentSelection/GovernmentSelection.svelte';
+  import TechSelection from './lib/technologyPhase/techSelection/TechSelection.svelte';
   import ResourceHome from './lib/resourcePhase/resourceHome/ResourceHome.svelte';
 
-  const currentPhase = {
-    countrySelection: true,
-    governmentSelection: false,
-    technologySelection: false
-  }
-  let country;
-  let government;
-
-  const setToGovernmentSelection = () => {
-    currentPhase.countrySelection = false;
-    currentPhase.technologySelection = false;
-    currentPhase.governmentSelection = true;
-  }
-
-  const setToCountrySelection = () => {
-    currentPhase.countrySelection = true;
-    currentPhase.technologySelection = false;
-    currentPhase.governmentSelection = false;
-  }
-
-  const setToTechnologySelection = () => {
-    currentPhase.countrySelection = false;
-    currentPhase.technologySelection = true;
-    currentPhase.governmentSelection = false;
-  } 
-
-  const setToActiveRound = () => {
-    currentPhase.countrySelection = false;
-    currentPhase.technologySelection = false;
-    currentPhase.governmentSelection = false;
-  }
+  import { government, country, round, selectionPhase, currentResources, perTurnResources, technologies } from './lib/utils/store';
 
   function handleCountryUpdate(event) {
-      country = event.detail.finalCountry;
-      setToGovernmentSelection()
+      localStorage.setItem('country', event.detail.finalCountry)
+      $country = event.detail.finalCountry;
+      localStorage.setItem('selectionPhase', 'government')
+      $selectionPhase = 'government';
+
+      if(event.detail.finalCountry === 'Israel'){
+        localStorage.setItem('Agriculture', '1')
+        $technologies.Agriculture = 1;
+      }
   }
 
   function handleGovernmentUpdate(event) {
-      government = event.detail.finalGovernment;
-      setToActiveRound()
+      localStorage.setItem('government', event.detail.finalGovernment)
+      $government = event.detail.finalGovernment;
+
+      if($round === 0){
+        localStorage.setItem('selectionPhase', 'activeRound')
+        $selectionPhase = 'activeRound';
+      } else {
+        for( const [key, value] of Object.entries($currentResources)){
+          $currentResources[key] = parseInt($currentResources[key], 10) + $perTurnResources[key];
+          localStorage.setItem(key, $currentResources[key])
+        }
+
+        localStorage.setItem('selectionPhase', 'technology')
+        $selectionPhase = 'technology';
+      }
   }
 </script>
 
 <main>
-  {#if currentPhase.countrySelection}
+  <!-- <ResourceHome country={$country} government={$government}/> -->
+  <!-- <CountrySelection on:updateFinalCountry={handleCountryUpdate}/> -->
+  <!-- <TechSelection /> -->
+
+  {#if $selectionPhase==='country'}
     <CountrySelection on:updateFinalCountry={handleCountryUpdate}/>
-  {:else if currentPhase.governmentSelection}
+  {:else if $selectionPhase==='government'}
     <GovernmentSelection on:updateFinalGovernment={handleGovernmentUpdate}/>
-  {:else if currentPhase.technologySelection}
+  {:else if $selectionPhase==='technology'}
+    <TechSelection />
   {:else}
-    <ResourceHome country={country} government={government}/>
+    <ResourceHome selectedCountry={$country} government={$government}/>
   {/if}
 </main>
 
