@@ -4,8 +4,8 @@
     export let perTurn
     export let updateCurrentResources;
 
-    function updateValue(newValue) {
-        let updateValue = removeLeadingZeros(newValue);
+    function updateValue() {
+        let updateValue = removeLeadingZeros(value);
         updateCurrentResources(resource, updateValue);
 
         if(typeof updateValue !== 'number'){
@@ -29,7 +29,7 @@
             +{value}
         </div>
     {:else}
-        <input class='current' on:change={() => updateValue(value)} bind:value={value} type='number' placeholder=0/>
+        <input class='current' on:change={() => updateValue()} bind:value={value} type='number' placeholder=0/>
     {/if}
 </main>
 
@@ -45,8 +45,8 @@
         font-size: 1.25em;
     }
     .current{
-        width: 80%;
-        font-size: 1em;
+        width: 60%;
+        font-size: 1.25em;
         background-color: var(--lightYellow);
         border-radius: 15%;
         text-align: center;

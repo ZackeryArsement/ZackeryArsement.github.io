@@ -125,7 +125,7 @@
     </div>
     <div class='currentResources'>
         {#each Object.entries($currentTiles) as [tileType, value] (tileType)}
-            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue}/>
+            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government}/>
         {/each}
     </div>
     <div class='currentResourceHeader'>
@@ -133,7 +133,7 @@
     </div>
     <div class='currentResources'>
         {#each Object.entries($currentToggleTiles) as [tileType, value] (tileType)}
-            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue}/>
+            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government}/>
         {/each}
     </div>
 

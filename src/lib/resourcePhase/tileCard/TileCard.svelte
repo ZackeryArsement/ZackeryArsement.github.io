@@ -2,12 +2,24 @@
     export let tileType;
     export let value;
     export let updateTileValue;
+    export let government;
 
-    function updateValue(newValue) {
-        let updateValue = removeLeadingZeros(newValue);
+    function updateValue() {
+        // if(tileType.includes("Dsrt")){
+        //     if (government == 'Monarchy Dst') {
+                
+        //     }
+
+        // } else if (government == 'Monarchy Swp' && tileType.includes("Swmp")) {
+            
+        // } else if (government == 'Monarchy Mtn' && tileType.includes("Mntn")) {
+            
+        // }
+
+        let updateValue = removeLeadingZeros(value);
 
         localStorage.setItem(tileType, updateValue)
-        updateTileValue(tileType, newValue);
+        updateTileValue(tileType, value);
     }
 
     function removeLeadingZeros(numberStr) {
@@ -19,7 +31,9 @@
     <div class='resource'>
         {tileType}
     </div>
-    <input class='value' bind:value={value} placeholder=0 type="number" on:change={() => updateValue(value)}/>
+
+    <input class='value' bind:value={value} placeholder=0 type="number" on:change={() => updateValue()} />
+
 </main>
 
 <style>
@@ -37,8 +51,8 @@
         margin-bottom: 0.5em;
     }
     .value{
-        width: 80%;
-        font-size: 1em;
+        width: 60%;
+        font-size: 1.25em;
         background-color: var(--lightYellow);
         border-radius: 10%;
         text-align: center;
