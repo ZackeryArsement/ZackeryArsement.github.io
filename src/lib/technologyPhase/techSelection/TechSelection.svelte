@@ -76,87 +76,87 @@
     const technologies3 = [
         {
             name: 'Navigation',
-            description: ['Gain +1 from all tech tiles']
+            description: ['+5 food from oceans']
         },
         {
             name: 'Gunpowder',
-            description: ['Essential technology for walls and brickworking']
+            description: ['Unlock lvl 1 ground forces']
         },
         {
             name: 'Currency',
-            description: ['Unlock lvl 2 Infantry']
+            description: ['+1 gold from all gold squares']
         }
     ]
     const technologies4 = [
         {
             name: 'Universities',
-            description: ['Gain +1 from all tech tiles']
+            description: ['+1 tech from all tech tiles']
         },
         {
             name: 'Canons',
-            description: ['Essential technology for walls and brickworking']
+            description: ['Unlock lvl 2 calvary']
         },
         {
             name: 'SteamEngine',
-            description: ['Unlock lvl 2 Infantry']
+            description: ['+5 iron from Mountains']
         }
     ]
     const technologies5 = [
         {
             name: 'Computers',
-            description: ['Gain +1 from all tech tiles']
+            description: ['+1 tech from all tech tiles']
         },
         {
             name: 'Flight',
-            description: ['Essential technology for walls and brickworking']
+            description: ['Unlock lvl 1 air forces']
         },
         {
             name: 'CombustionEngine',
-            description: ['Unlock lvl 2 Infantry']
+            description: ['Wood can now be converted to iron', '50 wood -> 10 iron']
         },
         {
             name: 'Steamboat',
-            description: ['Unlock lvl 2 archers','+5 wood from Forest','+5 food from Forest']
+            description: ['Unlock lvl 2 navy']
         },
         {
             name: 'FarmingRevolution',
-            description: ['+5 food from Plains']
+            description: ['+5 food from Plains', 'Wood can now be converted to food', '40 wood -> 10 food']
         },
         {
             name: 'Banking',
-            description: ['+5 food from Plains']
+            description: ['+1 gold from all gold tiles']
         }
     ]
     const technologies6 = [
         {
             name: 'AdvancedFlight',
-            description: ['Gain +1 from all tech tiles']
+            description: ['Unlock lvl 2 air force']
         },
         {
             name: 'Industrialization',
-            description: ['Essential technology for walls and brickworking']
+            description: ['Units can spawn from any ally city']
         },
         {
             name: 'Tanks',
-            description: ['Unlock lvl 2 Infantry']
+            description: ['Unlock lvl 3 calvary']
         },
         {
             name: 'Battleships',
-            description: ['Unlock lvl 2 archers','+5 wood from Forest','+5 food from Forest']
+            description: ['Unlock lvl 3 navy']
         },
         {
             name: 'ModernInfantry',
-            description: ['+5 food from Plains']
+            description: ['Unlock lvl 2 advanced units']
         },
         {
             name: 'WorldBank',
-            description: ['+5 food from Plains']
+            description: ['Reach 250 gold and you win!']
         }
     ]
     const technologies7 = [
         {
             name: 'SpaceFlight',
-            description: ['Gain +1 from all tech tiles']
+            description: ['Reach for the starts and colonize a new planet', 'Collect 2000 food, 500 iron, all technologies and you win!']
         }
     ]
   </script>
@@ -256,8 +256,9 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 95vw;
-        background-color: var(--lightYellow);
+        width: 100vw;
+        background-color: var(--darkYellow);
+        z-index: 100;
     }
     #title{
         font-weight: 600;

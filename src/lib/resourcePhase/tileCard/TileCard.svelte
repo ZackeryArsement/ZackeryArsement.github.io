@@ -16,10 +16,10 @@
     }
 </script>
 <main>
-    <div id='resource'>
+    <div class='resource'>
         {tileType}
     </div>
-    <input id='value' bind:value={value} placeholder=0 type="number" on:change={() => updateValue(value)}/>
+    <input class='value' bind:value={value} placeholder=0 type="number" on:change={() => updateValue(value)}/>
 </main>
 
 <style>
@@ -33,12 +33,12 @@
         font-weight: 600;
         font-size: 1em;
     }
-    #resource{
+    .resource{
         margin-bottom: 0.5em;
     }
-    #value{
+    .value{
         width: 80%;
-        font-size: 2em;
+        font-size: 1em;
         background-color: var(--lightYellow);
         border-radius: 10%;
         text-align: center;

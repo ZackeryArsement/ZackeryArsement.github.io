@@ -29,7 +29,7 @@
             +{value}
         </div>
     {:else}
-        <input id='current' on:change={() => updateValue(value)} bind:value={value} type='number' placeholder=0/>
+        <input class='current' on:change={() => updateValue(value)} bind:value={value} type='number' placeholder=0/>
     {/if}
 </main>
 
@@ -44,9 +44,9 @@
         font-weight: 600;
         font-size: 1.25em;
     }
-    #current{
+    .current{
         width: 80%;
-        font-size: 1.25em;
+        font-size: 1em;
         background-color: var(--lightYellow);
         border-radius: 15%;
         text-align: center;
