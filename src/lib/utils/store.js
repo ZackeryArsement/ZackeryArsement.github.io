@@ -137,8 +137,9 @@ const goldPerTurn = derived([currentTiles, currentToggleTiles, technologies, cou
     let switzerlandGold = 3 * activeIs('Switzerland', $country) * (2**($technologies.Blacksmithing + $technologies.Currency + $technologies.Banking))
     let americanGold = 1 * $currentTiles.Mountain * activeIs('America', $country)
     let theCongo = 1 * $currentTiles.Forest * (1 + $technologies.Currency + $technologies.Banking) * activeIs('The Congo', $country)
+    let dutch = 3 * activeIs('Dutch Empire', $country) * (2**($technologies.Blacksmithing + $technologies.Currency + $technologies.Banking)) * activeIs('Democracy', $government)
 
-    let totalGold = desertGold + mountainGold + egyptGold + switzerlandGold + americanGold + theCongo
+    let totalGold = desertGold + mountainGold + egyptGold + switzerlandGold + americanGold + theCongo + dutch
 
     let incanGold = Math.floor(totalGold / 5) * activeIs('Inca', $country)
     return totalGold + incanGold;
@@ -153,8 +154,9 @@ const techPerTurn = derived([currentTiles, currentToggleTiles, technologies, cou
     
     let egyptTech = $currentTiles.Desert * activeIs('Egypt Tech', $country)
     let greeceTech = 3 * activeIs('Greece', $country) * (2**($technologies.Literacy + $technologies.Universities + $technologies.Computers))
+    let dutch = 3 * activeIs('Dutch Empire', $country) * (2**($technologies.Literacy + $technologies.Universities + $technologies.Computers)) * activeIs('Democracy', $government)
 
-    let totalTech = oceanTech + desertTech + snowTech + egyptTech + greeceTech
+    let totalTech = oceanTech + desertTech + snowTech + egyptTech + greeceTech + dutch
     return totalTech;
 });
 

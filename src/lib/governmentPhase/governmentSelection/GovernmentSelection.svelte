@@ -75,13 +75,13 @@
       {
         name: "Monarchy Swp",
         description: [
-          'Receive both resources from Desert tiles'
+          'Receive both resources from Swamp tiles'
         ]
       },
       {
         name: "Monarchy Mtn",
         description: [
-          'Receive both resources from Desert tiles'
+          'Receive both resources from Mountain tiles'
         ]
       },
     ]  

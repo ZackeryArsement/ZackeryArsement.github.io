@@ -159,6 +159,13 @@
           "+3 defense and +1 movement to all navy",
           "Cost of navy units is reduced by half (rounded up to nearest 5)"
         ]
+      }, 
+      {
+        name: "Dutch Empire",
+        description: [
+          "+3 gold, +3 tech while democracy",
+          "Both gold and tech double from tech and gold technologies, respectively"
+        ]
       }
     ]
   
