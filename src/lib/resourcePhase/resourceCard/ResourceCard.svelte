@@ -6,12 +6,12 @@
 
     function updateValue() {
         let updateValue = removeLeadingZeros(value);
-        updateCurrentResources(resource, updateValue);
 
-        if(typeof updateValue !== 'number'){
-            updateValue = '0';
+        if(!value){
+            updateValue = '0'
         }
 
+        updateCurrentResources(resource, updateValue);
         localStorage.setItem(resource, updateValue)
     }
 
@@ -29,7 +29,7 @@
             +{value}
         </div>
     {:else}
-        <input class='current' on:change={() => updateValue()} bind:value={value} type='number' placeholder=0/>
+        <input class='current' on:change={() => updateValue()} bind:value={value} type='number' placeholder=""/>
     {/if}
 </main>
 

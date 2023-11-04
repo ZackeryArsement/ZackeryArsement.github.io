@@ -1,7 +1,6 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
     import TechCard from '../techCard/TechCard.svelte';
-    import { currentResources, selectionPhase, pendingTechnologies, technologies } from '../../utils/store';
+    import { currentResources, selectionPhase, pendingTechnologies, technologies, justLooking } from '../../utils/store';
 
     let localTech = $currentResources.Tech;
     let remainingTech = localTech;
@@ -18,6 +17,7 @@
         $currentResources.Tech = remainingTech;
 
         $pendingTechnologies = [];
+        $justLooking = false
     }
 
     const handleRemainingTechUpdate = (event) => {

@@ -1,11 +1,10 @@
 <script>
-    import { onMount } from 'svelte';
   import CountrySelection from './lib/country/countrySelection/CountrySelection.svelte';
   import GovernmentSelection from './lib/governmentPhase/governmentSelection/GovernmentSelection.svelte';
   import TechSelection from './lib/technologyPhase/techSelection/TechSelection.svelte';
   import ResourceHome from './lib/resourcePhase/resourceHome/ResourceHome.svelte';
 
-  import { government, country, round, selectionPhase, currentResources, perTurnResources, technologies } from './lib/utils/store';
+  import { government, country, round, selectionPhase, currentResources, perTurnResources, technologies, justLooking } from './lib/utils/store';
 
   function handleCountryUpdate(event) {
       localStorage.setItem('country', event.detail.finalCountry)
@@ -39,18 +38,14 @@
 </script>
 
 <main>
-  <!-- <ResourceHome country={$country} government={$government}/> -->
-  <!-- <CountrySelection on:updateFinalCountry={handleCountryUpdate}/> -->
-  <!-- <TechSelection /> -->
-
   {#if $selectionPhase==='country'}
     <CountrySelection on:updateFinalCountry={handleCountryUpdate}/>
   {:else if $selectionPhase==='government'}
     <GovernmentSelection on:updateFinalGovernment={handleGovernmentUpdate}/>
-  {:else if $selectionPhase==='technology'}
+  {:else if $selectionPhase==='technology' || $justLooking}
     <TechSelection />
   {:else}
-    <ResourceHome selectedCountry={$country} government={$government}/>
+    <ResourceHome selectedCountry={$country} government={$government} />
   {/if}
 </main>
 

@@ -11,12 +11,13 @@ function initializeStoreFromLocalStorage(key, noParse) {
 
 export const country = writable(initializeStoreFromLocalStorage("country", true));
 
+export const justLooking = writable(false);
+
 function activeIs(testing, actual){
     return actual === testing ? 1 : 0;
 }
 
 export const selectionPhase = writable(initializeStoreFromLocalStorage("selectionPhase", true) ? initializeStoreFromLocalStorage("selectionPhase", true) : 'country');
-
 
 export const government = writable(initializeStoreFromLocalStorage("government", true));
 
@@ -40,7 +41,7 @@ export const currentToggleTiles = writable({
     SwmpFood: initializeStoreFromLocalStorage("SwmpFood"),
     SwmpWood: initializeStoreFromLocalStorage("SwmpWood"),
     MntnIron: initializeStoreFromLocalStorage("MntnIron"),
-    MntnnGold: initializeStoreFromLocalStorage("MntnnGold"),
+    MntnGold: initializeStoreFromLocalStorage("MntnGold"),
     DsrtGold: initializeStoreFromLocalStorage("DsrtGold"),
     DsrtTech: initializeStoreFromLocalStorage("DsrtTech")
 })
@@ -79,10 +80,12 @@ export const technologies = writable({
 })
 
 const foodPerTurn = derived([currentTiles, currentToggleTiles, technologies, country, atlantisCities, government], ([$currentTiles, $currentToggleTiles, $technologies, $country, $atlantisCities, $government]) => {
+    let calculatedSwampTiles = activeIs("Monarchy Swp", $government) > 0 ? $currentTiles.Swamp : $currentToggleTiles.SwmpFood;
+    
     let grasslandFood = $currentTiles.Grassland * 5 * (1 + $technologies.Agriculture + $technologies.Granary + $technologies.FarmingRevolution) ;
     let forestFood = $currentTiles.Forest * 5 * ($technologies.Woodworking + $technologies.Granary)
     let oceanFood = $currentToggleTiles.OcnFood * 5 + $currentTiles.Ocean * 5 * $technologies.Navigation;
-    let swampFood = ($currentToggleTiles.SwmpFood * 5 * (1 + $technologies.Granary))*(1 + activeIs('Cajuns Food', $country))
+    let swampFood = (calculatedSwampTiles * 5 * (1 + $technologies.Granary))*(1 + activeIs('Cajuns Food', $country))
 
     let atlantisFood = $atlantisCities * activeIs('Atlantis', $country) * 10 * (1 + $technologies.Navigation)
     let romansFood = 5 * ($currentTiles.Grassland + $currentToggleTiles.SwmpFood + $currentToggleTiles.OcnFood) * activeIs('Rome', $country) * activeIs('Republic', $government)
@@ -100,26 +103,35 @@ const foodPerTurn = derived([currentTiles, currentToggleTiles, technologies, cou
     return totalFood;
 });
 
-const woodPerTurn = derived([currentTiles, currentToggleTiles, technologies, country], ([$currentTiles, $currentToggleTiles, $technologies, $country]) => {
+const woodPerTurn = derived([currentTiles, currentToggleTiles, technologies, country, government], ([$currentTiles, $currentToggleTiles, $technologies, $country, $government]) => {
+    let calculatedSwampTiles = activeIs("Monarchy Swp", $government) > 0 ? $currentTiles.Swamp : $currentToggleTiles.SwmpWood;
+    
     let forestWood = $currentTiles.Forest * 5 * (1 + $technologies.Woodworking)
-    let swampWood = ($currentToggleTiles.SwmpWood * 5 * (1 + $technologies.Granary))*(1 + activeIs('Cajuns Wood', $country))
+    let swampWood = (calculatedSwampTiles * 5 * (1 + $technologies.Granary))*(1 + activeIs('Cajuns Wood', $country))
 
     let totalWood = forestWood + swampWood;
     return totalWood;
 });
 
-const ironPerTurn = derived([currentTiles, currentToggleTiles, technologies, country], ([$currentTiles, $currentToggleTiles, $technologies, $country]) => {
-    let mountainIron = $currentToggleTiles.MntnIron * 5 * (1 + $technologies.Bronzeworking + $technologies.SteamEngine)
+const ironPerTurn = derived([currentTiles, currentToggleTiles, technologies, country, government], ([$currentTiles, $currentToggleTiles, $technologies, $country, $government]) => {
+    let calculatedMountainTiles = activeIs("Monarchy Mtn", $government) > 0 ? $currentTiles.Mountain : $currentToggleTiles.MntnIron;
     
-    let americanIron = 5 * $currentTiles.Mountain * activeIs('America', $country)
+    let mountainIron = calculatedMountainTiles * 5 * (1 + $technologies.Bronzeworking + $technologies.SteamEngine)
+    
+    let americanIron = 5 * $currentTiles.Mountain * activeIs('America', $country);
 
-    let totalIron = mountainIron + americanIron;
+    let dictatorIron = 5 * $currentTiles.Mountain * activeIs('Dictator', $government);
+
+    let totalIron = mountainIron + americanIron + dictatorIron;
     return totalIron;
 });
 
-const goldPerTurn = derived([currentTiles, currentToggleTiles, technologies, country], ([$currentTiles, $currentToggleTiles, $technologies, $country]) => {
-    let desertGold = $currentToggleTiles.DsrtGold * (1 + $technologies.Currency + $technologies.Banking)
-    let mountainGold = $currentToggleTiles.MntnnGold * (1 + $technologies.Currency + $technologies.Banking)
+const goldPerTurn = derived([currentTiles, currentToggleTiles, technologies, country, government], ([$currentTiles, $currentToggleTiles, $technologies, $country, $government]) => {
+    let calculatedMountainTiles = activeIs("Monarchy Mtn", $government) > 0 ? $currentTiles.Mountain : $currentToggleTiles.MntnGold;
+    let calculatedDesertTiles = activeIs("Monarchy Dst", $government) > 0 ? $currentTiles.Desert : $currentToggleTiles.DsrtGold
+    
+    let desertGold = calculatedDesertTiles * (1 + $technologies.Currency + $technologies.Banking)
+    let mountainGold = calculatedMountainTiles * (1 + $technologies.Currency + $technologies.Banking)
     
     let egyptGold = $currentTiles.Desert * activeIs('Egypt Gold', $country)
     let switzerlandGold = 3 * activeIs('Switzerland', $country) * (2**($technologies.Blacksmithing + $technologies.Currency + $technologies.Banking))
@@ -132,9 +144,11 @@ const goldPerTurn = derived([currentTiles, currentToggleTiles, technologies, cou
     return totalGold + incanGold;
 });
 
-const techPerTurn = derived([currentTiles, currentToggleTiles, technologies, country], ([$currentTiles, $currentToggleTiles, $technologies, $country]) => {
+const techPerTurn = derived([currentTiles, currentToggleTiles, technologies, country, government], ([$currentTiles, $currentToggleTiles, $technologies, $country, $government]) => {
+    let calculatedDesertTiles = activeIs("Monarchy Dst", $government) > 0 ? $currentTiles.Desert : $currentToggleTiles.DsrtTech
+    
     let oceanTech = $currentToggleTiles.OcnTech * (1 + $technologies.Literacy + $technologies.Universities + $technologies.Computers)
-    let desertTech = $currentToggleTiles.DsrtTech * (1 + $technologies.Literacy + $technologies.Universities + $technologies.Computers)
+    let desertTech = calculatedDesertTiles * (1 + $technologies.Literacy + $technologies.Universities + $technologies.Computers)
     let snowTech = $currentTiles.Snow * (1 + $technologies.Literacy + $technologies.Universities + $technologies.Computers)
     
     let egyptTech = $currentTiles.Desert * activeIs('Egypt Tech', $country)

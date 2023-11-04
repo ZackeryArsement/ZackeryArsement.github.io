@@ -3,7 +3,7 @@
     export let cost;
     export let remainingTech;
     import { createEventDispatcher } from 'svelte';
-    import { pendingTechnologies } from '../../utils/store';
+    import { pendingTechnologies, justLooking } from '../../utils/store';
 
     let isChecked = false;
     let alreadyBought = localStorage.getItem(technology.name) === '1' ? true : false;
@@ -47,7 +47,7 @@
 
     {#if alreadyBought}
         <i class="fa fa-check" style="color: black; font-size:18px"></i>
-    {:else if  cost <= remainingTech || isChecked}
+    {:else if  (cost <= remainingTech || isChecked) && !($justLooking)}
         <input value={technology.name} type="checkbox" bind:checked={isChecked} on:click={selectTech}>
     {/if}
 

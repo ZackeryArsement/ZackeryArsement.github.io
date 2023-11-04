@@ -2,7 +2,7 @@
     export let selectedCountry;
     export let government;
 
-    import {currentTiles, currentToggleTiles, currentResources, perTurnResources, round, country, atlantisCities} from '../../utils/store'
+    import {currentTiles, currentToggleTiles, currentResources, perTurnResources, round, country, atlantisCities, justLooking} from '../../utils/store'
 
     import ResourceCard from "../resourceCard/ResourceCard.svelte";
     import TileCard from "../tileCard/TileCard.svelte";
@@ -72,6 +72,11 @@
         // Use regular expression to remove leading zeros
         return String(numberStr).replace(/^0+/, '');
     }
+
+    const peakAtTech = () => {
+        console.log('looking')
+        $justLooking = true;
+    }
 </script>
 
 <main>
@@ -104,6 +109,7 @@
 
     <div class='currentResourceHeader'>
         Current Resources
+        <i class="fa fa-question-circle" aria-hidden="true" on:click={peakAtTech}></i>
     </div>
     <div class='currentResources'>
         {#each Object.entries($currentResources) as [resource, value] (resource)}
@@ -125,7 +131,7 @@
     </div>
     <div class='currentResources'>
         {#each Object.entries($currentTiles) as [tileType, value] (tileType)}
-            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government}/>
+            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government} currentTiles={[]} currentToggleTiles={[]} toggle='false'/>
         {/each}
     </div>
     <div class='currentResourceHeader'>
@@ -133,7 +139,7 @@
     </div>
     <div class='currentResources'>
         {#each Object.entries($currentToggleTiles) as [tileType, value] (tileType)}
-            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government}/>
+            <TileCard tileType={tileType} value={value} updateTileValue={updateTileValue} government={government} currentTiles={$currentTiles} currentToggleTiles={$currentToggleTiles} toggle='true'/>
         {/each}
     </div>
 
@@ -196,6 +202,7 @@
         margin-bottom: 0.5rem;
     }
     .currentResourceHeader{
+        display: flex;
         color: white;
         text-align: left;
         padding-left: 1rem;
