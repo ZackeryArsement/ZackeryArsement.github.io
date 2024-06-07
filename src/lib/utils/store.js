@@ -25,6 +25,8 @@ export const round = writable(initializeStoreFromLocalStorage("round"));
 
 export const atlantisCities = writable(initializeStoreFromLocalStorage("atlantisCities"));
 
+export const playerCount = writable(initializeStoreFromLocalStorage("playerCount"));
+
 export const currentTiles = writable({
     Ocean: initializeStoreFromLocalStorage("Ocean"),
     Desert: initializeStoreFromLocalStorage("Desert"),

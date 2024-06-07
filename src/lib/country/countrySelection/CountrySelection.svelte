@@ -3,10 +3,17 @@
     import CountryCard from '../countryCard/CountryCard.svelte';
   
     let selectedCountry
+    let playerCount = 2;
+
     const dispatch = createEventDispatcher();
 
     function finalizeCountryUpdate(event) {
-        dispatch('updateFinalCountry', { finalCountry: event.target.value });
+      finalizePlayerCount();
+      dispatch('updateFinalCountry', { finalCountry: event.target.value });
+    }
+
+    function finalizePlayerCount(){
+      dispatch('updatePlayerCount', { finalPlayerCount: playerCount })
     }
   
     const countries = [
@@ -176,6 +183,15 @@
   </script>
   
   <main>
+    <div class='players-header'>
+      <div id="player-title">
+        Number of players
+      </div>
+      <select bind:value={playerCount} id='select-button'>
+        <option>2</option>
+        <option>4</option>
+      </select>
+    </div>
     <div class='card-container'>
       {#each countries as country}
         <CountryCard country={country} selectedCountry={selectedCountry} on:updateSelectedCountry={handleCountryUpdate}/>
@@ -186,6 +202,14 @@
   </main>
 
   <style>
+    .players-header{
+      display: flex;
+      justify-content: space-around;
+      background-color: burlywood;
+      padding: 1rem;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+    }
     .card-container{
       overflow-y: auto;
       display: grid;
@@ -197,5 +221,13 @@
     #finalize{
         font-size: 1.5rem;
         background-color: rgb(87, 87, 79);
+    }
+    #player-title{
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: black;
+    }
+    #select-button{
+      font-size: 1.5rem;
     }
   </style>

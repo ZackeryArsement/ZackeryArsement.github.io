@@ -1,9 +1,11 @@
 <script>
     import TechCard from '../techCard/TechCard.svelte';
-    import { currentResources, selectionPhase, pendingTechnologies, technologies, justLooking } from '../../utils/store';
+    import { currentResources, selectionPhase, pendingTechnologies, technologies, justLooking, playerCount } from '../../utils/store';
 
     let localTech = $currentResources.Tech;
     let remainingTech = localTech;
+    let techbase = $playerCount==2 ? 5 : 6;
+    console.log($playerCount)
 
     const finalizeTechnology = () => {
         $pendingTechnologies.forEach(tech => {
@@ -178,58 +180,58 @@
     <div class='tech-container'>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 5 Tech
+                Cost: {techbase} Tech
             </div>
             {#each technologies1 as technology}
-                <TechCard technology={technology} cost={5} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 10 Tech
+                Cost: {techbase*2} Tech
             </div>
             {#each technologies2 as technology}
-                <TechCard technology={technology } cost={10} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology } cost={techbase*2} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 15 Tech
+                Cost: {techbase*3} Tech
             </div>
             {#each technologies3 as technology}
-                <TechCard technology={technology} cost={15} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase*3} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 30 Tech
+                Cost: {techbase*6} Tech
             </div>
             {#each technologies4 as technology}
-                <TechCard technology={technology} cost={30} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase*6} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 50 Tech
+                Cost: {techbase*10} Tech
             </div>
             {#each technologies5 as technology}
-                <TechCard technology={technology} cost={50} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase*10} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 80 Tech
+                Cost: {techbase*16} Tech
             </div>
             {#each technologies6 as technology}
-                <TechCard technology={technology} cost={80} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase*16} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
         <div class='card-container'>
             <div style="color: white;">
-                Cost: 100 Tech
+                Cost: {techbase*20} Tech
             </div>
             {#each technologies7 as technology}
-                <TechCard technology={technology} cost={100} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
+                <TechCard technology={technology} cost={techbase*20} remainingTech={remainingTech}  on:updateupdateRemainingTech={handleRemainingTechUpdate}/>
             {/each}
         </div>
     </div>

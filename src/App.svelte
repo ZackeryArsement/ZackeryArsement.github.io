@@ -4,7 +4,7 @@
   import TechSelection from './lib/technologyPhase/techSelection/TechSelection.svelte';
   import ResourceHome from './lib/resourcePhase/resourceHome/ResourceHome.svelte';
 
-  import { government, country, round, selectionPhase, currentResources, perTurnResources, technologies, justLooking } from './lib/utils/store';
+  import { government, country, round, selectionPhase, currentResources, perTurnResources, technologies, justLooking, playerCount } from './lib/utils/store';
 
   function handleCountryUpdate(event) {
       localStorage.setItem('country', event.detail.finalCountry)
@@ -16,6 +16,12 @@
         localStorage.setItem('Agriculture', '1')
         $technologies.Agriculture = 1;
       }
+  }
+  function handlePlayerCountUpdate(event) {
+    localStorage.setItem('playerCount', event.detail.finalPlayerCount);
+    $playerCount = event.detail.finalPlayerCount;
+    console.log($playerCount)
+    console.log(event.detail.finalPlayerCount)
   }
 
   function handleGovernmentUpdate(event) {
@@ -39,7 +45,7 @@
 
 <main>
   {#if $selectionPhase==='country'}
-    <CountrySelection on:updateFinalCountry={handleCountryUpdate}/>
+    <CountrySelection on:updateFinalCountry={handleCountryUpdate} on:updatePlayerCount={handlePlayerCountUpdate}/>
   {:else if $selectionPhase==='government'}
     <GovernmentSelection on:updateFinalGovernment={handleGovernmentUpdate}/>
   {:else if $selectionPhase==='technology' || $justLooking}
